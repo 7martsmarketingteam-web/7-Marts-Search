@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f9ff">
+  <meta name="description" content="7 Marts Search — search the web, images, videos, and news.">
+  <title>7 Marts Search</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%231d63e9'/%3E%3Ctext x='50' y='69' font-size='61' text-anchor='middle' fill='white' font-family='Arial' font-weight='700'%3E7%3C/text%3E%3C/svg%3E">
+  <style>
+    :root { color-scheme: light; --bg:#f7f9ff; --panel:#fff; --text:#172033; --muted:#68738a; --line:#e4e9f3; --blue:#1d63e9; --blue2:#124fc7; --shadow:0 16px 48px rgba(35,67,130,.09); }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; background:radial-gradient(ellipse at 50% 0%, #e9f0ff 0, var(--bg) 52%); color:var(--text); font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; transition:background .2s,color .2s; }
+    .top { display:flex; align-items:center; justify-content:space-between; padding:18px clamp(16px,4vw,42px); }
+    .brand-small { display:flex; align-items:center; gap:10px; font-weight:750; letter-spacing:-.4px; }
+    .logo { width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#3682ff,#124fc7);color:white;font-weight:850;font-size:23px;box-shadow:0 5px 14px #1d63e933; }
+    .top-actions { display:flex; gap:8px; }
+    .icon-btn { border:1px solid var(--line); background:var(--panel); color:var(--text); border-radius:12px; min-width:42px;height:42px; cursor:pointer;font-size:17px; }
+    main { width:min(760px, calc(100% - 32px)); margin:clamp(48px,12vh,112px) auto 0; text-align:center; }
+    .hero-logo { width:66px;height:66px;border-radius:22px;display:grid;place-items:center;margin:0 auto 18px;background:linear-gradient(145deg,#3682ff,#124fc7);color:white;font-size:43px;font-weight:850;box-shadow:0 12px 28px #1d63e92b; }
+    h1 { margin:0; font-size:clamp(34px,7vw,55px); letter-spacing:-2px; line-height:1.08; }
+    h1 span { color:var(--blue); }
+    .tagline { color:var(--muted); margin:14px 0 30px; font-size:clamp(14px,2.8vw,17px); }
+    form { display:flex; align-items:center; gap:10px; background:var(--panel); border:1px solid #dce4f3; border-radius:19px; padding:8px 8px 8px 17px; box-shadow:var(--shadow); transition:border .2s,box-shadow .2s; }
+    form:focus-within { border-color:#8db3ff; box-shadow:0 0 0 4px #1d63e916,var(--shadow); }
+    .search-icon { color:var(--muted);font-size:21px; }
+    input { min-width:0; flex:1; border:0; outline:0; background:transparent; color:var(--text); font-size:16px; padding:11px 0; }
+    .clear { display:none; border:0;background:transparent;color:var(--muted);font-size:20px;cursor:pointer;padding:4px 8px; }
+    .search-btn { border:0; border-radius:13px; background:var(--blue); color:#fff; font-weight:700; padding:13px 19px; cursor:pointer; font-size:14px; }
+    .search-btn:hover { background:var(--blue2); }
+    .tabs { display:flex; flex-wrap:wrap; justify-content:center; gap:9px; margin:20px 0 0; }
+    .tab { border:1px solid var(--line); background:var(--panel); color:var(--muted); padding:10px 15px; border-radius:999px; cursor:pointer; font-size:13px; font-weight:650; }
+    .tab.active { color:var(--blue); background:#eaf1ff; border-color:#c7d9ff; }
+    .hint { color:var(--muted); font-size:13px; margin:25px 0 0; }
+    .recent { margin:32px auto 0; max-width:520px; text-align:left; display:none; }
+    .recent-head { display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;margin-bottom:10px; }
+    .recent-head button { border:0;background:transparent;color:var(--blue);cursor:pointer; }
+    .recent-list { display:flex;flex-wrap:wrap;gap:8px; }
+    .recent-item { border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:9px 12px;color:var(--text);font-size:13px;cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+    footer { text-align:center; padding:48px 16px 22px; color:var(--muted); font-size:12px; }
+    footer a { color:inherit;text-decoration:none;margin:0 8px; }
+    .notice { max-width:560px;margin:28px auto 0;padding:12px 15px;border-radius:13px;background:#fff7df;border:1px solid #f2e2ae;color:#775a0b;font-size:12px;line-height:1.5; }
+    body.dark { color-scheme:dark; --bg:#0c1220; --panel:#151e30; --text:#eff4ff; --muted:#a4b0c6; --line:#2a354b; --shadow:0 16px 48px #0004; background:radial-gradient(ellipse at 50% 0%,#172847 0,var(--bg) 56%); }
+    body.dark .tab.active { background:#1b3158;border-color:#34578e; }
+    body.dark .notice { background:#302812;border-color:#5b4a1a;color:#f1d989; }
+    @media(max-width:520px) { main { margin-top:58px; } form { border-radius:16px; gap:7px; padding-left:13px; } .search-btn { padding:12px 13px; } .tabs { gap:7px; } .tab { padding:9px 12px; } .brand-small { font-size:14px; } }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="brand-small"><div class="logo">7</div><span>7 Marts Search</span></div>
+    <div class="top-actions">
+      <button class="icon-btn" id="historyBtn" title="Show recent searches" aria-label="Show recent searches">◷</button>
+      <button class="icon-btn" id="themeBtn" title="Toggle dark mode" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero-logo" aria-hidden="true">7</div>
+    <h1>7 Marts <span>Search</span></h1>
+    <p class="tagline">Search the web. Discover more.</p>
+    <form id="searchForm">
+      <span class="search-icon" aria-hidden="true">⌕</span>
+      <input id="query" type="search" placeholder="Search anything on the web..." autocomplete="off" aria-label="Search the web" maxlength="300" required>
+      <button class="clear" id="clearBtn" type="button" aria-label="Clear search">×</button>
+      <button class="search-btn" type="submit">Search ↗</button>
+    </form>
+    <nav class="tabs" aria-label="Search type">
+      <button class="tab active" data-type="web">🌐 Web</button>
+      <button class="tab" data-type="images">▧ Images</button>
+      <button class="tab" data-type="videos">▶ Videos</button>
+      <button class="tab" data-type="news">▤ News</button>
+      <button class="tab" data-type="shopping">🛍 Shopping</button>
+    </nav>
+    <p class="hint">Type a question, topic, or website name to get started.</p>
+    <section class="recent" id="recent">
+      <div class="recent-head"><span>Recent searches on this device</span><button id="clearHistory" type="button">Clear history</button></div>
+      <div class="recent-list" id="recentList"></div>
+    </section>
+    <div class="notice">Free starter version: searches open real results from the selected search provider. Results are currently hosted by that provider, not indexed or ranked by 7 Marts Search itself.</div>
+  </main>
+
+  <footer>
+    <div>© <span id="year"></span> 7 Marts Search</div>
+    <p><a href="#" id="aboutLink">About</a><a href="#" id="privacyLink">Privacy</a></p>
+  </footer>
+  <script>
+    const form = document.getElementById('searchForm');
+    const input = document.getElementById('query');
+    const clearBtn = document.getElementById('clearBtn');
+    const tabs = [...document.querySelectorAll('.tab')];
+    const recentBox = document.getElementById('recent');
+    const recentList = document.getElementById('recentList');
+    let searchType = 'web';
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function getHistory() {
+      try { return JSON.parse(localStorage.getItem('7ms-history') || '[]'); } catch { return []; }
+    }
+    function showHistory() {
+      const items = getHistory();
+      recentList.replaceChildren();
+      items.forEach(q => {
+        const b = document.createElement('button');
+        b.className = 'recent-item'; b.type = 'button'; b.textContent = q;
+        b.addEventListener('click', () => { input.value = q; doSearch(q); });
+        recentList.appendChild(b);
+      });
+      recentBox.style.display = items.length ? 'block' : 'none';
+    }
+    function doSearch(raw) {
+      const q = raw.trim();
+      if (!q) { input.focus(); return; }
+      try {
+        const h = getHistory().filter(item => item.toLowerCase() !== q.toLowerCase());
+        h.unshift(q);
+        localStorage.setItem('7ms-history', JSON.stringify(h.slice(0,8)));
+      } catch {}
+      let url;
+      const encoded = encodeURIComponent(q);
+      if (searchType === 'images') url = 'https://www.google.com/search?tbm=isch&q=' + encoded;
+      else if (searchType === 'videos') url = 'https://www.youtube.com/results?search_query=' + encoded;
+      else if (searchType === 'news') url = 'https://news.google.com/search?q=' + encoded;
+      else if (searchType === 'shopping') url = 'https://www.google.com/search?tbm=shop&q=' + encoded;
+      else url = 'https://www.google.com/search?q=' + encoded;
+      showHistory();
+      window.location.href = url;
+    }
+    form.addEventListener('submit', e => { e.preventDefault(); doSearch(input.value); });
+    input.addEventListener('input', () => { clearBtn.style.display = input.value ? 'block' : 'none'; });
+    clearBtn.addEventListener('click', () => { input.value=''; clearBtn.style.display='none'; input.focus(); });
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.toggle('active', t === tab));
+      searchType = tab.dataset.type;
+      input.focus();
+    }));
+    document.getElementById('themeBtn').addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      try { localStorage.setItem('7ms-dark', document.body.classList.contains('dark') ? '1' : '0'); } catch {}
+      document.getElementById('themeBtn').textContent = document.body.classList.contains('dark') ? '☀' : '☾';
+    });
+    try {
+      if (localStorage.getItem('7ms-dark') === '1') {
+        document.body.classList.add('dark'); document.getElementById('themeBtn').textContent='☀';
+      }
+    } catch {}
+    document.getElementById('historyBtn').addEventListener('click', () => {
+      showHistory();
+      if (recentBox.style.display === 'none') recentBox.style.display = 'block';
+      else recentBox.style.display = 'none';
+      recentBox.scrollIntoView({behavior:'smooth',block:'nearest'});
+    });
+    document.getElementById('clearHistory').addEventListener('click', () => {
+      try { localStorage.removeItem('7ms-history'); } catch {}
+      showHistory();
+    });
+    document.getElementById('aboutLink').addEventListener('click', e => {
+      e.preventDefault(); alert('7 Marts Search is a search interface that sends your query to the selected external search provider.');
+    });
+    document.getElementById('privacyLink').addEventListener('click', e => {
+      e.preventDefault(); alert('Search queries are sent to Google or YouTube depending on the selected tab. Recent searches and theme preference may be stored locally in this browser. Clear recent searches using the history panel or clear this site’s browser data.');
+    });
+    showHistory();
+  </script>
+</body>
+</html>
